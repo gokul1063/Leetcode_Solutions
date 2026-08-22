@@ -10,24 +10,24 @@
  * };
  */
 class Solution {
-public:
-    int answer = 0;
-    int helper(TreeNode *root, int depth){
+
+private:
+    int helper2 (TreeNode *root){
         if (!root)
-            return depth;
-        return max( helper(root->left, depth + 1),
-                    helper(root->right, depth + 1));
+            return 0;
+
+        int left_height = helper2(root->left);
+        int right_height = helper2(root->right);
+
+        answer = max(answer, left_height + right_height);
+
+        return 1 + max(left_height , right_height);
+
         
     }
-    void helper2(TreeNode *root){
-        if (!root)
-            return;
-        answer = max(answer, helper(root->left, 0) + 
-                             helper(root->right,0));
-        helper2(root->left);
-        helper2(root->right);
-    }
-
+public:
+    int answer = 0;
+    
     int diameterOfBinaryTree(TreeNode* root) {
         helper2(root);
         return answer;
