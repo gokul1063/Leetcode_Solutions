@@ -1,34 +1,25 @@
 class Solution {
 public:
-    int rob2(vector<int>& nums, int start, int end){
+    int helper(int start, int end, int offset, vector<int>& nums){
         int n = end - start + 1;
+        vector<int> dp(n + 1, 0);
 
-        if (n == 1) 
-            return nums[start];
+        dp[1] = nums[start];
 
-        vector<int> dp(n, 0);
+        for (int i = 2 ; i <= n ; i++){
+            dp[i] = max(dp[i-1], dp[i-2] + nums[start + i - 1]);
+        } 
 
-        dp[0] = nums[start];
+        return dp[n];
 
-        dp[1] = max(nums[start + 1], nums[start]);
 
-        for (int i = 2 ; i < n ; i++){
-            dp[i] = max(
-                dp[i-1],
-                nums[start + i] + dp[i-2]
-            );
-        }
-        return dp[n-1];
     }
     int rob(vector<int>& nums) {
+        if (nums.size() == 1) return nums[0];
+        int n1 = helper(0,nums.size()-2, 0, nums);
+        int n2 = helper(1,nums.size()-1, 1, nums);
 
-        int n = nums.size();
+        return max(n1,n2);
 
-        if (n == 1)
-            return nums[0];
-        return max(
-            rob2(nums,0,n-2),
-            rob2(nums,1,n-1)
-        );
     }
 };
