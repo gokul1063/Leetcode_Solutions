@@ -3,20 +3,21 @@
 class Solution:
     def subsetsWithDup(self, nums: list[int]) -> list[list[int]]:
         res = []
-        res.append([])
-        n = len(nums)
+        nums.sort()
 
-        for i in range(0,n):
-            res2 = []
-            for ele in res :
-                checker = sorted(ele + [nums[i]])
-                if checker not in res:
-                    res2.append(checker)
-            print(res2)
-            res.extend(res2)
-            #print(res2)
+        def back(i, subset):
+            if i == len(nums):
+                res.append(subset[::])
+                return 
             
-        return res
+            subset.append(nums[i])
+            back(i+1,subset)
+            subset.pop()
 
+            while i+1 < len(nums) and nums[i] == nums[i+1]:
+                i +=1
+            back(i+1,subset)
+        back(0,[])
+        return res
 
 
