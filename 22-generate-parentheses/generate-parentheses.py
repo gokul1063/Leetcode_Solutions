@@ -2,20 +2,16 @@ class Solution:
     def generateParenthesis(self, n: int) -> list[str]:
         res = []
 
-        def back(curr, balance, formed) :
-            if balance < 0 : 
+        def back(l,r,curr):
+            if l == 0 and r == 0 :
+                res.append(curr)
                 return
-                
-            if formed == n and len(curr) == 2 * n: 
-                if curr not in res :
-                    res.append(curr)
-                return 
-            if len(curr) > 2 * n :
-                return 
             
-             
-            back(curr + '(', balance + 1, formed)
-            back(curr + ')', balance - 1, formed + 1)
+            if (l > 0):
+                back(l-1,r,curr + '(')
+            if (l < r):
+                back(l, r-1, curr + ')')
 
-        back('', 0, 0)
+
+        back(n,n,"")
         return res
