@@ -36,10 +36,10 @@ class Solution:
         def back(row, board) : 
             if row == n : 
                 mat = []
+
                 for ele in board : 
                     mat.append(''.join(ele))
-                print(mat)
-                res.append(mat[::])
+                res.append(mat)
                 return 
             
             for i in range(n) :
